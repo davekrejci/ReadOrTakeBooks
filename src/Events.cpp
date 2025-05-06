@@ -42,7 +42,10 @@ namespace Book::Event
 			return EventResult::kContinue;
 		}
 
-        const auto hotKey = Settings::GetSingleton()->GetHotkey();
+        const auto settings = Settings::GetSingleton();
+		const auto hotKey = settings->GetHotkey();
+		const auto hotKeyGamePad = settings->GetHotkeyGamePad();
+
 
 		for (auto event = *a_evn; event; event = event->next) {
 			if (const auto button = event->AsButtonEvent(); button) {
@@ -61,7 +64,7 @@ namespace Book::Event
 					break;
 				}
 
-				if (key == hotKey) {
+				if (key == hotKey || (device == RE::INPUT_DEVICE::kGamepad && key == hotKeyGamePad)) {
 					if (toggleKeyHeld != button->IsHeld()) {
 						toggleKeyHeld = button->IsHeld();
 

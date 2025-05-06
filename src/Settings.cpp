@@ -11,6 +11,7 @@ bool Settings::LoadSettings()
 
 	ini::get_value(ini, action, "Settings", "Default action", ";Default action upon activating books\n;0 - Automatic (take read books) | 1 - Take | 2 - Read.");
 	ini::get_value(ini, hotKey, "Settings", "Alternate action hotkey", ";Press hotkey + Activate key to take instead of read, or vice versa. Default is Left Shift\n;DXScanCodes : https://ck.uesp.net/wiki/Input_Script");
+	ini::get_value(ini, hotKeyGamePad, "Settings", "Alternate action hotkey (Gamepad)", ";Optional separate hotkey for gamepad users.");
 	ini::get_value(ini, autoUseSpellTomes, "Settings", "Auto use spell tomes", ";Learn spells from spell tomes directly.");
 
 	(void) ini.SaveFile(path.c_str());
@@ -26,6 +27,11 @@ DefaultAction Settings::GetDefaultAction() const
 Key Settings::GetHotkey() const
 {
     return hotKey;
+}
+
+Key Settings::GetHotkeyGamePad() const
+{
+	return hotKeyGamePad;
 }
 
 bool Settings::GetAutoUseSpellTomes() const
